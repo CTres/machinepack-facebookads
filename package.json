@@ -28,7 +28,6 @@
     "machineDir": "machines/",
     "machines": [
       "get-ad-account-id",
-      "get-first-campaign-id-for-given-campaign-name",
       "get-ad-campaigns",
       "get-ads-in-ad-set",
       "get-ad-sets-in-campaign",
@@ -36,7 +35,6 @@
       "get-ad-creative-by-adgroup-id",
       "get-campaign-overview",
       "get-campaign-details",
-      "create-campaign",
       "create-ad-set",
       "update-ad-set"
     ]

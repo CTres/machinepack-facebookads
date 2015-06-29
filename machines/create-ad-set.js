@@ -1,6 +1,4 @@
 module.exports = {
-
-
   friendlyName: 'create-ad-set',
 
 
@@ -11,28 +9,70 @@ module.exports = {
   cacheable: true,
 
   inputs: {
-    fbUserId: {
-      example: '509503',
-      description: 'facebook user id',
+    adAccount: {
+      example: '12314231231232',
+      description: 'facebook user ad account',
       required: true,
     },
-
-    adCampaignGroupId: {
+    campaignGroupId: {
       example: '3213213124',
       description: 'woo campaign group id',
       required: true,
     },
-
-    adImages: {
-      example: "['fadlk3421jkl;rehui234', '1235tgds43q41234']",
-      description: 'an array of image_hashes returned by facebook',
+    pageId: {
+      example: '2313212421',
+      description: 'fb page for the ad',
       required: true,
     },
-
     accessToken: {
       example: 'CAACEdEose0cBACBhZA7DJbYapwM7oZBt1EWhPiGqibBZAZAZCZCe6IOkfDRzrs1jyZCS93zSuj9GaNQQtxbny0jeSCqyBNaQUl3ocDiD3lO4GSboFm5B7NogSHFzTGYw0rdpndDKolQcfsS5nYeYwZAIKXF1WPzgGaGxNIDh36oZBHuazcN3WSNmL9jGyO9YmYlZBmZCcigBuMFvtXj4XlzNWyb',
       description: 'this is the facebook issued access token for a given user and app pair',
-      required: true
+      required: true,
+    },
+    images: {
+      example: ['fadlk3421jkl;rehui234', '1235tgds43q41234'],
+      description: 'an array of image_hashes returned by facebook',
+      required: true,
+    },
+    titles: {
+      example: ['Sitting on the beach has never been so fun', 'title 9'],
+      description: 'an array of title strings',
+      required: true,
+    },
+    captions: {
+      example: ['caption 1', 'caption 2'],
+      description: 'an array of caption strings',
+      required: true,
+    },
+    url: {
+      example: 'http://www.example.com',
+      description: 'url target of the ad campaign',
+      required: true,
+    },
+    gender: {
+      example: 1,
+      description: 'integer',
+      required: true,
+    },
+    locations: {
+      example: {},
+      description: 'a dictionary of locations',
+      required: true,
+    },
+    interests: {
+      example: [],
+      description: 'an array of interests as strings',
+      required: true,
+    },
+    age_min: {
+      example: "18",
+      description: 'minimum age',
+      required: true,
+    },
+    age_max: {
+      example: "19",
+      description: 'maximum age',
+      required: true,
     },
   },
 
@@ -42,71 +82,135 @@ module.exports = {
   exits: {
 
     error: {
-    example: {},
       description: 'The Facebook API returned an error (i.e. a non-2xx status code)',
     },
 
     success: {
-      example: {},
-      description: 'here is your campaign id',
+      description: 'campaign is now created',
     },
 
   },
 
-
   fn: function (inputs,exits) {
-    // fetch ad set information
-
-    // create the ad set
-    doBatchRequest({
-      method: 'post',
-      url: ['/v2.3', ]
-    })
-
-
-
-
-
-
+    // variables
     var doJSONRequest = require('../lib/do-request');
+    var async = require('async');
+    var generateAdCombinations = require('../lib/generateAdCombinations');
 
-    getAdAccountId = require('machine').build(require('./get-ad-account-id'));
+    // VARIABLE CLEANING
+    // prefix ad account with act_
+    account = ['act_', inputs.adAccount].join("");
+    if (inputs.gender == 0) {
+      inputs.gender = [];
+    } else if (inputs.gender == 1) {
+      inputs.gender = [1];
+    } else {
+      inputs.gender = [2];
+    }
 
-    getAdAccountId({
-      "fbUserId" : inputs.fbUserId,
-      "accessToken" : inputs.accessToken
-    }).exec({
-      error: function(error){
-        return exits.error(error);
+    // create the AD SET
+    doJSONRequest({
+      method: 'post',
+      url: ['/v2.3/', account, '/adcampaigns' ].join(""),
+      data: {
+        'name' : ['AdRocket', ' - ', Date.now()].join(""),
+        'campaign_group_id' : inputs.campaignGroupId,
+        'campaign_status' : 'PAUSED',
+        'bid_type' : 'ABSOLUTE_OCPM' ,
+        'bid_info' : {"REACH" : 100, "CLICKS" : 200},
+        'daily_budget' : '2500',
+        // 'end_time': 0,
+        'access_token': inputs.accessToken, // trying no start time to see if it goes immediately and no problems
+        'targeting' : {
+          'page_types': ['feed'],
+          'geo_locations': inputs.locations,
+          'genders': [2],
+          'interests': inputs.interests,
+          'age_min' : inputs.age_min,
+          'age_max': inputs.age_max,
+          },
       },
+      headers: {},
+    },
 
-      success: function(account_id){
-        // get the page name of the page id param
+    function (err, responseBody) {
+      if (err) { return exits.error(err); }
+
+
+      // AD CREATIVES
+
+      adSetId = responseBody.id;
+
+      // GENERATING THE AD CREATIVE COMBINATIONS
+      adCollection = generateAdCombinations(inputs.titles, inputs.captions, inputs.images)
+
+      // CREATE AD CREATIVE AND AD AND ASSIGN TO AD SET
+      ads = []; // store the AdIds in this array
+      countChoco = 0;
+
+      async.each(adCollection, function(creative, callback){
+        function callback(result){
+          if (err) { return exits.error(err);
+          } else {
+          return exits.success(result);
+          }
+        };
 
         doJSONRequest({
           method: 'post',
-          url: ['/v2.3/', account_id.data[0].id, '/adcampaigns' ].join(""),
+          url: ['/v2.3/', account, '/adcreatives' ].join(""),
           data: {
-            'name' : ['Woo - ', page.name,'-', Date.now()].join(""),
-            'bid_type' : 'ABSOLUTE_OCPM' ,
-            'bid_info' : {"REACH" : 100, "CLICKS" : 200},
-            'campaign_status' : 'PAUSED',
-            'daily_budget' : '1000',
-            'campaign_group_id' : inputs.campaignGroupId,
-            'targeting' : {'geo_locations' : 'Boston'},
-            'objective' : 'WEBSITE_CONVERSIONS',
-            'campaign_group_status' : 'PAUSED',
-            'access_token': inputs.accessToken
-
+            'access_token' : inputs.accessToken,
+            'name' : 'test ad',
+            'object_story_spec' : {
+              "page_id" : inputs.pageId,
+              "link_data" : {
+                "message" : creative.title,
+                "link" : inputs.url,
+                "caption" : creative.caption,
+                "image_hash" : creative.image,
+              }
+            }
           },
           headers: {},
         },
+        // Response from Ad Set Creation
+        function (err, responseBody) {
+          if (err) {
+            console.log(err);
+            return exits.error(err); }
+          // Variables
+          adCreativeId = responseBody.id;
 
-            function (err, responseBody) {
-              if (err) { return exits.error(err); }
-              return exits.success(responseBody);
-            });
-          }
-    })// success function find account id
+          // Now go create the ad, tying the ad creative together with the ad set
+
+          doJSONRequest({
+            method: 'post',
+            url: ['/v2.3/', account, '/adgroups' ].join(""),
+            data: {
+              'campaign_id': adSetId,
+              'name' : ['AdRocket', '-', Date.now()].join(""),
+              'access_token' : inputs.accessToken,
+              'creative' : {
+                'creative_id' : adCreativeId,
+              }
+            },
+            headers: {},
+          },
+          function (err, responseBody) {
+            if (err) {
+              console.log(err);
+              return exits.error(err); }
+
+            countChoco++;
+            ads.push(responseBody.id);
+            if (countChoco == adCollection.length) {
+              callback(ads);
+            }
+          })
+        }
+        )
+      });
+    })
   } // module exports
 }

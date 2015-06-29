@@ -85,7 +85,7 @@ module.exports = {
           'id' : myJson.data[i].id,
           'daily_budget' : myJson.data[i].daily_budget,
           'campaign_status' : campaignStatus,
-            'clicks' : myJson.data[i].stats.clicks,
+          'clicks' : myJson.data[i].stats.clicks,
           'impressions' : myJson.data[i].stats.impressions
          });
        }
