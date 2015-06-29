@@ -14,6 +14,11 @@ module.exports = {
       description: 'facebook user ad account',
       required: true,
     },
+    fbUserId: {
+      example: '509503',
+      description: 'facebook user id',
+      required: true,
+    },
     campaignGroupId: {
       example: '3213213124',
       description: 'woo campaign group id',
