@@ -24,7 +24,7 @@ module.exports = {
       description: 'woo campaign group id',
       required: true,
     },
-    pageId: {
+    fbPageId: {
       example: '2313212421',
       description: 'fb page for the ad',
       required: true,
@@ -168,7 +168,7 @@ module.exports = {
             'access_token' : inputs.accessToken,
             'name' : 'test ad',
             'object_story_spec' : {
-              "page_id" : inputs.pageId,
+              "page_id" : inputs.fbPageId,
               "link_data" : {
                 "message" : creative.title,
                 "link" : inputs.url,
