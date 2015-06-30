@@ -35,17 +35,17 @@ module.exports = {
       required: true,
     },
     images: {
-      example: ['fadlk3421jkl;rehui234', '1235tgds43q41234'],
+      example: [],
       description: 'an array of image_hashes returned by facebook',
       required: true,
     },
     titles: {
-      example: ['Sitting on the beach has never been so fun', 'title 9'],
+      example: [],
       description: 'an array of title strings',
       required: true,
     },
     captions: {
-      example: ['caption 1', 'caption 2'],
+      example: [],
       description: 'an array of caption strings',
       required: true,
     },
