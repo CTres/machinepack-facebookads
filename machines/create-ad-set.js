@@ -10,22 +10,22 @@ module.exports = {
 
   inputs: {
     adAccount: {
-      example: '12314231231232',
+      example: "12314231231232",
       description: 'facebook user ad account',
       required: true,
     },
     fbUserId: {
-      example: '509503',
+      example: "509503",
       description: 'facebook user id',
       required: true,
     },
     campaignGroupId: {
-      example: '3213213124',
+      example: "3213213124",
       description: 'woo campaign group id',
       required: true,
     },
     fbPageId: {
-      example: '2313212421',
+      example: "2313212421",
       description: 'fb page for the ad',
       required: true,
     },
@@ -50,7 +50,7 @@ module.exports = {
       required: true,
     },
     url: {
-      example: 'http://www.example.com',
+      example: "http://www.example.com",
       description: 'url target of the ad campaign',
       required: true,
     },
