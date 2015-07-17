@@ -48,7 +48,7 @@ module.exports = {
     // GET ad accounts/ and send the api token as a header
     doJSONRequest({
       method: 'get',
-      url: ['/v2.2/', inputs.adAccountId, '/adcampaign_groups'].join(""),
+      url: ['/v2.3/', inputs.adAccountId, '/adcampaign_groups'].join(""),
       data: {
         'access_token': inputs.accessToken,
         'fields' : 'name'

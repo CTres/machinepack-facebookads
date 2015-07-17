@@ -194,7 +194,7 @@ module.exports = {
         }
         doJSONRequest({
           method: 'get',
-          url: ['/v2.2/', ad.id ].join(""),
+          url: ['/v2.3/', ad.id ].join(""),
           data: {
             'access_token': inputs.accessToken,
             'fields' : 'adcreatives{id,image_url,object_story_spec}'
