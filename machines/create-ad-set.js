@@ -97,7 +97,7 @@ module.exports = {
   },
 
   fn: function (inputs,exits) {
-    // variables
+    // VARIABLES
     var doJSONRequest = require('../lib/do-request');
     var async = require('async');
     var generateAdCombinations = require('../lib/generateAdCombinations');
@@ -142,7 +142,7 @@ module.exports = {
       if (err) { return exits.error(err); }
 
 
-      // AD CREATIVES
+      // CREATE THE AD CREATIVES
 
       adSetId = responseBody.id;
 

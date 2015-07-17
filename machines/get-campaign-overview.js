@@ -54,7 +54,7 @@ module.exports = {
     // fetch ad campaigns
     doJSONRequest({
       method: 'get',
-      url: ['/v2.2/', inputs.adCampaignGroupId ].join(""),
+      url: ['/v2.3/', inputs.adCampaignGroupId ].join(""),
       data: {
         'access_token': inputs.accessToken,
         'fields' : 'adcampaigns{id,daily_budget,campaign_status,stats}'
@@ -111,7 +111,7 @@ module.exports = {
         // api call to facebook
         doJSONRequest({
           method: 'get',
-          url: ['/v2.2/', adSet.id, '/adgroups' ].join(""),
+          url: ['/v2.3/', adSet.id, '/adgroups' ].join(""),
           data: {
             'access_token': inputs.accessToken,
             'fields' : 'id,stats'
@@ -163,7 +163,7 @@ module.exports = {
 
               doJSONRequest({
                 method: 'get',
-                url: ['/v2.2/', ad.id ].join(""),
+                url: ['/v2.3/', ad.id ].join(""),
                 data: {
                   'access_token': inputs.accessToken,
                   'fields' : 'adcreatives{id,image_url,object_story_spec}'
