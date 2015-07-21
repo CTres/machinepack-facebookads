@@ -1,6 +1,6 @@
 {
   "name": "machinepack-facebookads",
-  "version": "1.3.36",
+  "version": "1.3.37",
   "description": "interact with the facebook marketing api",
   "scripts": {
     "test": "node ./node_modules/test-machinepack-mocha/bin/testmachinepack-mocha.js"
