@@ -82,7 +82,7 @@ module.exports = {
               url: ['/v2.3/', account_id.data[0].id, '/adcampaign_groups' ].join(""),
               data: {
                 'name' : ['AdRocket - ', page.name].join(""),
-                'objective' : 'WEBSITE_CONVERSIONS',
+                'objective' : 'WEBSITE_CLICKS',
                 'campaign_group_status' : 'PAUSED',
                 'access_token': inputs.accessToken
 

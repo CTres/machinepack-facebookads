@@ -65,6 +65,7 @@ module.exports = {
     // handle the response from facebook
     function (err, responseBody) {
       if (err) { return exits.error(err); }
+      console.log(responseBody);
       if (typeof responseBody.adcampaigns === "undefined"){
         return exits.noCampaignsYet({});
       }
@@ -136,9 +137,8 @@ module.exports = {
            newArray.sort(function(a,b){
             return b.impressions - a.impressions;
         })
-
           // append the existing json with the top ad information.
-          resultJson.adCampaigns[adSet.index].topAd = newArray[0] ;
+          resultJson.adCampaigns[adSet.index].topAd = newArray[0];
           counter++;
 
           // if all of the parallel requests have completed, call the callback function
