@@ -30,14 +30,13 @@ module.exports = {
 
   exits: {
 
-    error: {
-      description: 'The Facebook API returned an error (i.e. a non-2xx status code)',
-    },
-
     success: {
       description: 'This is the top ad account associated with the user.',
     },
 
+    error: {
+      description: 'The Facebook API returned an error (i.e. a non-2xx status code)',
+    },
   },
 
 
@@ -57,8 +56,8 @@ module.exports = {
       if (error) {
         console.log('error');
         console.log(error);
-        return exits.error(error); }
-
+        return exits.error(error);
+      }
       return exits.success(responseBody);
     });
   }
