@@ -63,8 +63,8 @@ module.exports = {
     }
     // if budget is set to 0, then pause the campaign.
     if (inputs.dailyBudget == 0) {
-      console.log('0');
-      doJSONRequest({
+
+    return  doJSONRequest({
         method: 'post',
         url: ['/v2.3/', inputs.adCampaignId ].join(""),
         data: {
@@ -81,7 +81,7 @@ module.exports = {
       });
     } // end if
     else {
-    doJSONRequest({
+    return doJSONRequest({
       method: 'post',
       url: ['/v2.3/', inputs.adCampaignId ].join(""),
       data: {

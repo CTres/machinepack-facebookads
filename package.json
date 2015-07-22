@@ -32,7 +32,6 @@
       "get-ads-in-ad-set",
       "get-ad-sets-in-campaign",
       "get-top-ad-in-ad-set",
-      "get-ad-creative-by-adgroup-id",
       "get-campaign-overview",
       "get-campaign-details",
       "create-ad-set",

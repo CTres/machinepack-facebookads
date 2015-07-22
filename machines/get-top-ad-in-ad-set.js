@@ -47,7 +47,7 @@ module.exports = {
     var doJSONRequest = require('../lib/do-request');
 
     // GET ad accounts/ and send the api token as a header
-    doJSONRequest({
+    return doJSONRequest({
       method: 'get',
       url: ['/v2.3/', inputs.adCampaignId, '/adgroups' ].join(""),
       data: {

@@ -114,7 +114,7 @@ module.exports = {
     }
 
     // create the AD SET
-    doJSONRequest({
+    return doJSONRequest({
       method: 'post',
       url: ['/v2.3/', account, '/adcampaigns' ].join(""),
       data: {
@@ -161,7 +161,7 @@ module.exports = {
           }
         };
 
-        doJSONRequest({
+        return doJSONRequest({
           method: 'post',
           url: ['/v2.3/', account, '/adcreatives' ].join(""),
           data: {
@@ -189,7 +189,7 @@ module.exports = {
 
           // Now go create the ad, tying the ad creative together with the ad set
 
-          doJSONRequest({
+          return doJSONRequest({
             method: 'post',
             url: ['/v2.3/', account, '/adgroups' ].join(""),
             data: {

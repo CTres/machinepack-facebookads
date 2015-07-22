@@ -52,7 +52,7 @@ module.exports = {
     var doJSONRequest = require('../lib/do-request');
 
     // fetch ad campaigns
-    doJSONRequest({
+    return doJSONRequest({
       method: 'get',
       url: ['/v2.3/', inputs.adCampaignGroupId ].join(""),
       data: {
@@ -112,7 +112,7 @@ module.exports = {
         var doJSONRequest = require('../lib/do-request');
 
         // api call to facebook
-        doJSONRequest({
+        return doJSONRequest({
           method: 'get',
           url: ['/v2.3/', adSet.id, '/adgroups' ].join(""),
           data: {
@@ -167,7 +167,7 @@ module.exports = {
                 return exits.success(result);
               }
 
-              doJSONRequest({
+              return doJSONRequest({
                 method: 'get',
                 url: ['/v2.3/', ad.id ].join(""),
                 data: {

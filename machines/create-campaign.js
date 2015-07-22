@@ -77,7 +77,7 @@ module.exports = {
           },
 
           success: function(page){
-            doJSONRequest({
+            return doJSONRequest({
               method: 'post',
               url: ['/v2.3/', account_id.data[0].id, '/adcampaign_groups' ].join(""),
               data: {

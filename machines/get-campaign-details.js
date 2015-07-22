@@ -50,7 +50,7 @@ module.exports = {
     var doJSONRequest = require('../lib/do-request');
 
     // GET ad accounts/ and send the api token as a header
-    doJSONRequest({
+    return doJSONRequest({
       method: 'get',
       url: ['/v2.3/', inputs.adCampaignId ].join(""),
       data: {
@@ -147,7 +147,7 @@ module.exports = {
       resultJson = { "adset" : newArray[0] };
 
       // fetch all ads for the ad set
-      doJSONRequest({
+      return doJSONRequest({
         method: 'get',
         url: ['/v2.3/', resultJson.adset.id, '/adgroups' ].join(""),
         data: {
@@ -192,7 +192,7 @@ module.exports = {
         function callbacktwo(result){
           return exits.success(result);
         }
-        doJSONRequest({
+        return doJSONRequest({
           method: 'get',
           url: ['/v2.3/', ad.id ].join(""),
           data: {
