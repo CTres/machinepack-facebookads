@@ -54,7 +54,10 @@ module.exports = {
       },
       headers: {},
     }, function (error, responseBody) {
-      if (error) { return exits.error(error); }
+      if (error) {
+        console.log('error');
+        console.log(error);
+        return exits.error(error); }
 
       return exits.success(responseBody);
     });
