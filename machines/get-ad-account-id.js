@@ -53,8 +53,9 @@ module.exports = {
         'access_token': inputs.accessToken,
       },
       headers: {},
-    }, function (err, responseBody) {
-      if (err) { return exits.error(err); }
+    }, function (error, responseBody) {
+      if (error) { return exits.error(error); }
+
       return exits.success(responseBody);
     });
   }

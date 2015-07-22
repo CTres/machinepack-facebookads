@@ -66,6 +66,8 @@ module.exports = {
     function (err, responseBody) {
       if (err) { return exits.error(err); }
       console.log(responseBody);
+
+
       if (typeof responseBody.adcampaigns === "undefined"){
         return exits.noCampaignsYet({});
       }
@@ -77,7 +79,7 @@ module.exports = {
 
 
       for (var i=0; i<len; i++){
-        if (myJson.data[i].daily_budget == '0'){
+        if (myJson.data[i].daily_budget == '0' || myJson.data[i].campaign_status == 'CAMPAIGN_GROUP_PAUSED' ){
           var campaignStatus = 'PAUSED';
         } else {
           var campaignStatus = myJson.data[i].campaign_status ;
@@ -124,14 +126,18 @@ module.exports = {
         function (err, response) {
           if (err) { return exits.error(err); }
 
-          // PARSING RESPONSE INTO THE CORRECT FORMAT
+          // Stripping down the response to just the ids of the top ads
           var newArray = [];
           var len = response.data.length;
+
+          // if the ad set does not have a top ad, do not include it
           for (var i=0; i<len; i++){
-            newArray.push({
-              'id' : response.data[i].id,
-            });
-          }
+            if (typeof response.data[i].id === "undefined") {
+            } else
+              newArray.push({
+                'id' : response.data[i].id,
+              })
+            }
 
            // rank by impressions
            newArray.sort(function(a,b){
